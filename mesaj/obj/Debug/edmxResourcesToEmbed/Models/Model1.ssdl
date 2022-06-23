@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Grup">
+    <Key>
+      <PropertyRef Name="GrupId" />
+    </Key>
+    <Property Name="GrupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GrupAdi" Type="nchar" MaxLength="10" />
+    <Property Name="Kurucu" Type="int" />
+  </EntityType>
+  <EntityType Name="Kullanici">
+    <Key>
+      <PropertyRef Name="KullaniciId" />
+    </Key>
+    <Property Name="KullaniciId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KullaniciAdi" Type="nvarchar" MaxLength="50" />
+    <Property Name="Sifre" Type="nchar" MaxLength="10" />
+    <Property Name="Numara" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Mesaj">
+    <Key>
+      <PropertyRef Name="MesajId" />
+    </Key>
+    <Property Name="MesajId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Mesaj" Type="nchar" MaxLength="10" />
+    <Property Name="Gonderen" Type="int" />
+  </EntityType>
+  <EntityType Name="Resim">
+    <Key>
+      <PropertyRef Name="ResimId" />
+    </Key>
+    <Property Name="ResimId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ResimAdi" Type="nchar" MaxLength="10" />
+    <Property Name="KullaniciId" Type="int" />
+  </EntityType>
+  <Association Name="FK_Grup_ToKullanici">
+    <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="0..1" />
+    <End Role="Grup" Type="Self.Grup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kullanici">
+        <PropertyRef Name="KullaniciId" />
+      </Principal>
+      <Dependent Role="Grup">
+        <PropertyRef Name="Kurucu" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Mesaj_ToKullanici">
+    <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="0..1" />
+    <End Role="Mesaj" Type="Self.Mesaj" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kullanici">
+        <PropertyRef Name="KullaniciId" />
+      </Principal>
+      <Dependent Role="Mesaj">
+        <PropertyRef Name="Gonderen" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Resim_ToKullanici">
+    <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="0..1" />
+    <End Role="Resim" Type="Self.Resim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kullanici">
+        <PropertyRef Name="KullaniciId" />
+      </Principal>
+      <Dependent Role="Resim">
+        <PropertyRef Name="KullaniciId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Database1ModelStoreContainer">
+    <EntitySet Name="Grup" EntityType="Self.Grup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kullanici" EntityType="Self.Kullanici" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Mesaj" EntityType="Self.Mesaj" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Resim" EntityType="Self.Resim" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Grup_ToKullanici" Association="Self.FK_Grup_ToKullanici">
+      <End Role="Kullanici" EntitySet="Kullanici" />
+      <End Role="Grup" EntitySet="Grup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Mesaj_ToKullanici" Association="Self.FK_Mesaj_ToKullanici">
+      <End Role="Kullanici" EntitySet="Kullanici" />
+      <End Role="Mesaj" EntitySet="Mesaj" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Resim_ToKullanici" Association="Self.FK_Resim_ToKullanici">
+      <End Role="Kullanici" EntitySet="Kullanici" />
+      <End Role="Resim" EntitySet="Resim" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
